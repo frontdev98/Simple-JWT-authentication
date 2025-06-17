@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "name": "nodejs-jwt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontdev98/jwt-auth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontdev98/jwt-auth/issues"
+  },
+  "homepage": "https://github.com/frontdev98/jwt-auth#readme"
+}
