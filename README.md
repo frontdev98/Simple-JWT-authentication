@@ -10,6 +10,9 @@
 Clone the project and go to its directory:
 ```bash
 git clone https://github.com/frontdev98/jwt-auth.git
+```
+
+```bash
 cd jwt-auth
 ```
 
