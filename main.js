@@ -1,29 +1,32 @@
 const express = require('express');
 const appSettings = require('./settings');
 const db = require('./db');
-
-// appliation base error handler
-const errHandler = (err, req, res, next) => {
-    console.log(`An error was occured during application working: ${err}`);
-    next();
-};
+const connHandler = require('./middlewares/connection');
+const errHandler  = require('./middlewares/appError');
 
 async function App() {
-    const testDbRequest= await db.query(`SELECT 'Database is working!';`);
+    try {
+        const testDbRequest= await db.query(`SELECT 'Database is working!';`);
 
-    console.log(`Database test: ${Object.entries(testDbRequest.rows[0])}`);
+        console.log(`Database test: ${Object.entries(testDbRequest.rows[0])}`);
 
-    const app = express();
+        const app = express();
 
-    // base error handler
-    app.use(errHandler);
+        // show each connection to the server
+        app.use(connHandler);
 
-    // use json format for requests and responses
-    app.use(express.json());
+        // application error handler
+        app.use(errHandler);
 
-    app.listen(appSettings.PORT, () => {
-        console.log(`Server's working on PORT ${appSettings.PORT}.`);
-    });
+        // use json format for requests and responses
+        app.use(express.json());
+
+        app.listen(appSettings.PORT, () => {});
+
+    } catch (err) {
+        console.log(err);
+    }
+    
 }
 
 App();

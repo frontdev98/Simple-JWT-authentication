@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "express": "^5.1.0",
-    "pg": "^8.16.0"
+    "pg": "^8.16.0",
+    "useragent": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
