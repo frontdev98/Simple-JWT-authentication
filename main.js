@@ -1,8 +1,11 @@
 const express = require('express');
 const appSettings = require('./settings');
 const db = require('./db');
+
 const connHandler = require('./middlewares/connection');
 const errHandler  = require('./middlewares/appError');
+
+const authRouter = require('./routers/authRouter');
 
 async function App() {
     try {
@@ -17,6 +20,9 @@ async function App() {
 
         // application error handler
         app.use(errHandler);
+
+        // authentication router
+        app.use('/auth', authRouter);
 
         // use json format for requests and responses
         app.use(express.json());
