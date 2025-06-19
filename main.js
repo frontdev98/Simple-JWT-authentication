@@ -1,6 +1,7 @@
 const express = require('express');
 const appSettings = require('./settings');
 const db = require('./db');
+require('dotenv').config();
 
 const connHandler = require('./middlewares/connection');
 const errHandler  = require('./middlewares/appError');
@@ -27,7 +28,7 @@ async function App() {
         // use json format for requests and responses
         app.use(express.json());
 
-        app.listen(appSettings.PORT, () => {});
+        app.listen(process.env.PORT, () => {});
 
     } catch (err) {
         console.log(err);
