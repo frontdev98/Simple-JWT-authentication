@@ -1,8 +1,6 @@
 const pool = require('./db');
 
 async function initDb() {
-    console.log("Create SCHEMA jwt_auth and TABLE persons");
-
     try {
         await pool.query(`
             CREATE SCHEMA IF NOT EXISTS jwt_auth;

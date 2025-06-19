@@ -2,7 +2,7 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "express-validator": "^7.2.1",
+    "express-json-validator-middleware": "^3.0.1",
     "pg": "^8.16.0",
     "useragent": "^2.3.0"
   },
