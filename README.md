@@ -60,7 +60,7 @@ JWT_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when ser
 4. Initialize database with data from step 3
 
 ```bash
-npm run initdb # it creates schema "jwt_auth" and table "persons"
+npm run dbinit # it creates schema "jwt_auth" and table "persons"
 ```
 
 6. Run the project in development mode
@@ -86,4 +86,9 @@ http --json http://localhost:5000/auth/login email=someuser@gmail.com password=1
 
 # 3. User list
 http --json http://localhost:5000/auth/user
+```
+
+Clear your database after the tests by command
+```bash
+npm run dbclear
 ```
