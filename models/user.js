@@ -1,31 +1,85 @@
 const pool = require('../db');
 
 class User {
-    async getAll() {
-        const users = await pool.query(`SELECT * FROM jwt_auth.persons;`);
-        return users.rows;
+    constructor(email, password, roles, id=undefined) {
+        this._email = email;
+        this._password = password;
+        this._roles = roles;
+        this._id = id;
     }
 
-    async getOne(email) {
-        const user = await pool.query(`SELECT * FROM jwt_auth.persons WHERE email = $1`, [email]);
-        return user.rows[0];
+    get email() {
+        return this._email;
     }
 
-    async add(email, password, role=2) {
-        const user = await pool.query(`INSERT INTO jwt_auth.persons (email, password, role) VALUES ($1, $2, $3) RETURNING *`, [email, password, role]);
-        return user.rows[0];
+    get password() {
+        return this._password;
     }
 
-    async update(id, data) {
-        const dataSetStr = Object.entries(data).map(([field, value]) => `${field} = ${value}`).join(', ');  // build string with data
-        const user = await this.pool.query(`UPDATE jwt_auth.persons SET ${dataSetStr} WHERE id = ${id} RETURNING *;`);
-        return user.rows[0];
+    get roles() {
+        return this._roles;
     }
 
-    async delete(id) {
-        const user = await this.pool.query(`DELETE FROM jwt_auth.persons WHERE id = ${id}`);
-        return user.rows[0];
+    get id() {
+        return this._id;
+    }
+
+    static async getAll() {
+        const query = await pool.query(`SELECT * FROM jwt_auth.persons;`);
+        const users = query.rows.map(({id, email, password, roles}) => 
+            new User(email, password, roles, id));
+        return users;
+    }
+
+    static async getOne(field) {
+        const [name, value] = Object.entries(field)[0];
+        const query = await pool.query(`SELECT * FROM jwt_auth.persons WHERE ${name}=$1`, [value]);
+
+        if (query.rows.length === 0)
+            return undefined;
+
+        const {id, email, password, roles} = query.rows[0];
+        const user = new User(email, password, roles, id);
+        return user;
+    }
+
+    async create() {
+        const query = await pool.query(
+            `INSERT INTO jwt_auth.persons (
+                email, 
+                password, 
+                roles
+            ) VALUES (
+                $1, 
+                $2, 
+                $3) 
+            RETURNING *`,
+        [this.email, this.password, this.roles]);
+
+        const {email, password, roles, id} = query.rows[0];
+        const user = new User(email, password, roles, id);
+        return user;
+    }
+
+    async update(fields) {
+        const {id, email, password, roles} = fields;
+        const query = await pool.query(
+            `UPDATE jwt_auth.persons 
+             SET 
+                email=$1, 
+                password=$2, 
+                roles=$3 
+            WHERE id=$4 
+                RETURNING *`,
+            [email, password, roles, id]);
+        const row = query.rows[0];
+        const user = new User(row.email, row.password, row.roles, row.id);
+        return user;
+    }
+
+    [Symbol.toPrimitive] = function(hint) {
+        return hint == 'string' ? `Person (${this.email} [${this.roles}]) ${this.id ? '*' : ''}` : this;
     }
 }
 
-module.exports = new User(pool);
+module.exports = { User };

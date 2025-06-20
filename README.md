@@ -1,16 +1,26 @@
 # JWT-Authentication
 
-# Stack
+The project demonstrates user authentication based with JWT (Json Web Token). 
+
+## Project Stack
 
 - Node v22.16.0
-- Express 5.1.0
-- Pg 8.16.0
-- Nodemon 3.1.10
-- useragent 2.3.0
-- express-validator 7.2.1
 - PostgreSQL 14.18
+- Express
+- Pg
+- Nodemon
+- useragent
+- express-validator
+- dotenv
+- httpie
+- Postman
 
-# Get started
+## Features
+
+* User registration
+* User login
+
+## Get started
 
 1. Clone the project and go to its directory:
 
@@ -43,12 +53,14 @@ DB_PASS="yourPassword"
 DB_NAME="databaseName"
 
 PORT=5000 # The server will run on 5000 port, you can change
+
+JWT_SECRET=$(openssl rand -base64 32) # Generates 256-bit key every time when server is started
 ```
 
-4. Run  command to init schema and table:
+4. Run  command to create PostgreSQL database's schema
 
 ```bash
-npm run initdb # it creates schema "jwt_auth" and table "persons"
+npm run init_db # it creates schema "jwt_auth" and table "persons"
 ```
 
 6. Run the project:
@@ -56,4 +68,19 @@ npm run initdb # it creates schema "jwt_auth" and table "persons"
 ```bash
 # This starts the project in development mode
 npm run dev
+```
+
+## Project test
+
+```bash
+# 1. Registration of user
+http --json http://localhost:5000/auth/register email=someuser@gmail.com password=12345678
+
+# 2. Login
+http --json http://localhost:5000/auth/login email=someuser@gmail.com password=12345678
+
+# If login action was successful, then you see token that server have sent, for example:
+# {
+#    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3NTA0MzEzMTIsImV4cCI6MTc1MDQ1MjkxMn0.V9PgU_6pDjCxXvUNOEWjYAKAGe1o67nUh1JEuDSlw8I"
+# }
 ```
