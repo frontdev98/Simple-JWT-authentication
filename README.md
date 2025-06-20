@@ -71,6 +71,8 @@ npm run dev
 ```
 
 ## Project test
+You will need "Postman" to make HTTP requests. If you have lots of fun
+from console, use httpie (like me).
 
 ```bash
 # 1. Registration of user
