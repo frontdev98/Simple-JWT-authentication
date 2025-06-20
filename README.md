@@ -1,6 +1,6 @@
 # JWT-Authentication
 
-The project demonstrates user authentication based with JWT (Json Web Token). 
+The project demonstrates user authentication based on JWT (Json Web Token). 
 
 ## Project Stack
 
