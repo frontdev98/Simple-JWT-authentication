@@ -27,16 +27,60 @@ async function initDb() {
             /* Create two roles: "admin" and "user" */
             INSERT INTO roles (name) VALUES ('admin');
             INSERT INTO roles (name) VALUES ('user');
+
+            /* 
+                Create two users with its roles: 
+                - delta657@gmail.com (admin),
+                - kvazar123@icloud.com (user)
+            */
+            INSERT INTO persons (email, password, role) VALUES ('delta657@gmail.com', '12345678', 1);
+            INSERT INTO persons (email, password, role) VALUES ('kvazar123@icloud.com', '12345678', 2);
         `);
 
     } catch (e) {
         console.log(`Error: ${e.message}, code=${e.code}`);
-        process.exit(-1);
+        return -1;
     }
 
     console.log("Database was successful initialized.");
 
+    return 0;
+}
+
+async function removeSchema() {
+    try {
+        await pool.query(`DROP SCHEMA jwt_auth CASCADE`);
+
+    } catch (e) {
+        console.log(e);
+        return -1;
+    }
+
+    return 0;
+}
+
+async function main() {
+    if (process.argv.length < 3) {
+        console.log("Missing argument");
+        process.exit(-1);
+    }
+
+    const arg = process.argv[2];
+    let ret;
+
+    switch (arg) {
+        case 'init':
+            ret = await initDb();
+            break;
+        case 'clear':
+            ret = await removeSchema();
+            break;
+        default:
+            console.log(`Unrecongnized argument ${arg}`);
+            process.exit(-1);
+    }
+
     process.exit(0);
 }
 
-initDb();
+main();

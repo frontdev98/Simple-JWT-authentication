@@ -2,12 +2,17 @@ const pool = require('../db');
 
 class User {
     async getAll() {
-        const users = await pool.query(`SELECT * FROM jwt_auth.persons;`).rows;
-        return users;
+        const users = await pool.query(`SELECT * FROM jwt_auth.persons;`);
+        return users.rows;
     }
 
-    async add(email, password) {
-        const user = await pool.query(`INSERT INTO jwt_auth.persons VALUES ($1, $2) RETURNING *`, [email, password]);
+    async getOne(email) {
+        const user = await pool.query(`SELECT * FROM jwt_auth.persons WHERE email = $1`, [email]);
+        return user.rows[0];
+    }
+
+    async add(email, password, role=2) {
+        const user = await pool.query(`INSERT INTO jwt_auth.persons (email, password, role) VALUES ($1, $2, $3) RETURNING *`, [email, password, role]);
         return user.rows[0];
     }
 

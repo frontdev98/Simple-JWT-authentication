@@ -10,6 +10,9 @@ async function App() {
     try {
         const app = express();
 
+        // use json format for requests and responses
+        app.use(express.json());
+
         // authentication router
         app.use('/auth', authRouter);
 
@@ -18,9 +21,6 @@ async function App() {
 
         // application error handler
         app.use(errHandler);
-
-        // use json format for requests and responses
-        app.use(express.json());
 
         app.listen(process.env.PORT, () => {});
 
