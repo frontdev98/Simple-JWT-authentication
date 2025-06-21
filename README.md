@@ -3,19 +3,27 @@
 The project demonstrates user authentication based on JWT (Json Web Token). 
 
 ## Project Stack
+Environment:
+- Ubuntu 22.04
 
+Base:
 - Node v22.16.0
 - PostgreSQL 14.18
-- Express
+- Openssl
+
+Modules:
+- express
+- express-validator
+- nodemon
+- dotenv
 - bcrypt
 - jsonwebtoken
-- Nodemon
 - pg
 - useragent
-- express-validator
-- dotenv
-- httpie
+
+Tools:
 - Postman
+- Httpie
 
 ## Features
 
