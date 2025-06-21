@@ -7,29 +7,24 @@ Environment:
 - Ubuntu 22.04
 
 Base:
-- Node v22.16.0
-- PostgreSQL 14.18
-- Openssl
+- [Node v22.16.0](https://nodejs.org/en/blog/release/v22.16.0)
+- [PostgreSQL 14.18](https://www.postgresql.org/about/news/postgresql-175-169-1513-1418-and-1321-released-3072/)
+- [Openssl 3.2.4](https://www.openssl.org/)
 
 Modules:
-- express
-- express-validator
-- nodemon
-- dotenv
-- bcrypt
-- jsonwebtoken
-- pg
-- useragent
+- [express](https://www.npmjs.com/package/express)
+- [express-validator](https://www.npmjs.com/package/express-validator)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [pg](https://www.npmjs.com/package/pg)
+- [useragent](https://www.npmjs.com/package/useragent)
 
 Tools:
-- Postman
-- Httpie
+- [Postman](https://www.postman.com/)
+- [Httpie](https://httpie.io/)
 
-## Features
-
-* User registration
-* User login
-* User list
 
 ## Get started
 
@@ -43,7 +38,12 @@ git clone https://github.com/frontdev98/jwt-auth.git
 cd jwt-auth
 ```
 
-2. Create new user with priveleges to access to database, for example:
+2. Install dependencies
+```bash
+npm i
+```
+
+3. Create new user with priveleges to access to database, for example:
 
 ```bash
 sudo -u postgres psql
@@ -54,7 +54,7 @@ CREATE USER userName WITH PASSWORD 'yourPassword' LOGIN;
 CREATE DATABASE userName WITH OWNER=userName;
 ```
 
-3. Create file ".env" and add next strings to it:
+4. Create file ".env" and add next strings to it:
 
 ```bash
 DB_HOST="localhost"    # postgresql server's address
@@ -68,7 +68,7 @@ PORT=5000 # The server will run on 5000 port, you can change
 JWT_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when server is started
 ```
 
-4. Initialize database with data from step 3
+5. Initialize database with data from step 3
 
 ```bash
 npm run dbinit # it creates schema "jwt_auth" and table "persons"
