@@ -17,8 +17,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dbinit": "node init_db.js init",
-    "dbclear": "node init_db.js clear",
+    "dbinit": "node ./devtools/dbinit.js init",
+    "dbclear": "node ./devtools/dbinit.js clear",
     "dev": "nodemon node main.js"
   },
   "repository": {

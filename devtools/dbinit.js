@@ -1,16 +1,16 @@
-const pool = require('./db');
+const pool = require('../db');
 
 async function initDb() {
     try {
         await pool.query(`
 
             /* Use new schema for the project */
-            CREATE SCHEMA IF NOT EXISTS jwt_auth;
+            CREATE SCHEMA IF NOT EXISTS sch_jwt_auth;
 
             /* Set default schema to jwt_auth */
-            SET search_path TO 'jwt_auth';
+            SET search_path TO 'sch_jwt_auth';
 
-            CREATE TABLE IF NOT EXISTS persons (
+            CREATE TABLE IF NOT EXISTS t_persons (
                 id			SERIAL			    PRIMARY KEY,
                 email		VARCHAR(255) 	    NOT NULL UNIQUE,
                 password	VARCHAR(255)	    NOT NULL,
@@ -20,7 +20,7 @@ async function initDb() {
         `);
 
     } catch (e) {
-        console.log(`Error: ${e.message}, code=${e.code}`);
+        console.log(e.message);
         return -1;
     }
 
@@ -31,12 +31,14 @@ async function initDb() {
 
 async function removeSchema() {
     try {
-        await pool.query(`DROP SCHEMA jwt_auth CASCADE`);
+        await pool.query(`DROP SCHEMA sch_jwt_auth CASCADE`);
 
     } catch (e) {
-        console.log(e);
+        console.log(e.message);
         return -1;
     }
+
+    console.log("Schema was successfully removed.")
 
     return 0;
 }
