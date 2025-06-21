@@ -78,6 +78,12 @@ class AuthController {
     async isAuthorized(req, res) {
         return res.json("Access granted.");
     }
+
+    async getUsers(req, res) {
+        const users = await User.getAll();
+        const response = users.map((user) => user.toJson());
+        return res.json(response);
+    }
 }
 
 module.exports = new AuthController();

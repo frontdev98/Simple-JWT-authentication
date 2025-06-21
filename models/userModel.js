@@ -77,6 +77,15 @@ class User {
         return user;
     }
 
+    toJson() {
+        return {
+            id: this.id,
+            email: this.email,
+            password: this.password,
+            roles: this.roles
+        };
+    }
+
     [Symbol.toPrimitive] = function(hint) {
         return hint == 'string' ? `Person (${this.email} [${this.roles}]) ${this.id ? '*' : ''}` : this;
     }
