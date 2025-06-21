@@ -66,7 +66,7 @@ DB_NAME="databaseName" # created database from step 2
 
 PORT=5000 # The server will run on 5000 port, you can change
 
-JWT_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when server is started
+JWT_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when server starts
 
 NODE_ENV=dev                          # Change it to "prod" if you don't want to see logs on console
 LOG_PATH='server.log'                 # Path to log file
@@ -100,9 +100,6 @@ http --json http://localhost:5000/auth/login email=someuser@gmail.com password=1
 # {
 #    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE3NTA0MzEzMTIsImV4cCI6MTc1MDQ1MjkxMn0.V9PgU_6pDjCxXvUNOEWjYAKAGe1o67nUh1JEuDSlw8I"
 # }
-
-# 3. User list
-http --json http://localhost:5000/auth/user
 ```
 
 Clear your database after the tests by command
