@@ -2,6 +2,7 @@ const Router = require('express');
 const router = new Router();
 const controller = require('../controllers/authController');
 const {check} = require('express-validator');
+const authMiddleware = require('../middlewares/auth');
 
 router.post('/register', [
     check('email', `Field email can't be empty!`).notEmpty().isEmail(),
@@ -19,5 +20,7 @@ router.all(/register|login/, (req, res) => {
         return res.status(405).end();
     }
 });
+
+router.get('/is_auth', authMiddleware, controller.isAuthorized);
 
 module.exports = router;

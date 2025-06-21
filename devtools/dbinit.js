@@ -1,4 +1,18 @@
 const pool = require('../db');
+const winston = require('winston');
+
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console({
+            format: winston.format.simple()
+        })
+    ],
+    defaultMeta: {
+        service: "Init DB"
+    },
+    format: winston.format.json(),
+    exitOnError: false
+});
 
 async function initDb() {
     try {
@@ -20,11 +34,17 @@ async function initDb() {
         `);
 
     } catch (e) {
-        console.log(e.message);
+        logger.log({
+            level: 'error',
+            message: e.message
+        });
         return -1;
     }
 
-    console.log("Database was successful initialized.");
+    logger.log({
+        level: 'info',
+        message: "Database was successful initialized."
+    });
 
     return 0;
 }
@@ -34,18 +54,27 @@ async function removeSchema() {
         await pool.query(`DROP SCHEMA sch_jwt_auth CASCADE`);
 
     } catch (e) {
-        console.log(e.message);
+        logger.log({
+            level: 'error',
+            message: e.message,
+        });
         return -1;
     }
 
-    console.log("Schema was successfully removed.")
+    logger.log({
+        level: 'info',
+        message: "Schema was successfully removed."
+    });
 
     return 0;
 }
 
 async function main() {
     if (process.argv.length < 3) {
-        console.log("Missing argument");
+        logger.log({
+            level: 'error',
+            message: `Missing argument`
+        });
         process.exit(-1);
     }
 
@@ -60,7 +89,10 @@ async function main() {
             ret = await removeSchema();
             break;
         default:
-            console.log(`Unrecongnized argument ${arg}`);
+            logger.log({
+                level: 'error',
+                message: `Unrecongnized argument ${arg}`
+            });
             process.exit(-1);
     }
 

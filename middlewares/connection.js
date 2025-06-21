@@ -1,4 +1,5 @@
 const useragent = require('useragent');
+const { logger } = require('../logger');
 
 const connHandler = (req, res, next) => {
     const ip = req.ip;
@@ -9,7 +10,11 @@ const connHandler = (req, res, next) => {
     const date = new Date();
 
     // show connection details
-    console.log(`[${date}]:\n\tFrom:   ${ip}\n\tAgent:  ${agent}\n\tDevice: ${device}\n\tOS:     ${os}`);
+    logger.log({
+        level: 'info',
+        message: `${date} ${ip} ${agent} ${device} ${os}`
+    });
+
 };
 
 module.exports = connHandler;

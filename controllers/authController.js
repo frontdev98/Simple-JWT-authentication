@@ -2,11 +2,18 @@ const bcrypt = require('bcrypt');
 const { User } = require('../models/userModel');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const { logger } = require('../logger');
 
 const generateAccessToken = (id, email, roles) => {
     const payload = {id, roles, email};
     const secret  = process.env.JWT_SECRET;
-    const token   = jwt.sign(payload, secret, {expiresIn: "6h"});
+    const token   = jwt.sign(payload, secret, {expiresIn: '1h'});
+
+    logger.log({
+        level: 'info',
+        message: `Generated token for "${email}": ${token}`
+    });
+
     return token;
 };
 
@@ -63,14 +70,13 @@ class AuthController {
         }
 
         // generate access token and send it to client
-        const token = generateAccessToken(user.id, user.roles);
+        const token = generateAccessToken(user.id, user.email, user.roles);
 
         return res.json({token});
     }
 
-    async getUsers(req, res) {
-        const users = await User.getAll();
-        return res.json(users);
+    async isAuthorized(req, res) {
+        return res.json("Access granted.");
     }
 }
 

@@ -1,5 +1,6 @@
 const pg = require('pg');
 require('dotenv').config();
+const { logger } = require('./logger');
 
 const pool = new pg.Pool({
     host: process.env.DB_HOST,
@@ -10,7 +11,10 @@ const pool = new pg.Pool({
 });
 
 pool.on('error', (err, client) => {
-    console.log(`Error was uccured during database request:\n${err}`);
+    logger.log({
+        level: 'error',
+        message: err.message
+    });
 });
 
 module.exports = pool;

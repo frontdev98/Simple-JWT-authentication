@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+const { logger } = require('./logger');
 
 const connHandler = require('./middlewares/connection');
 const errHandler  = require('./middlewares/appError');
@@ -25,8 +26,16 @@ async function App() {
         app.listen(process.env.PORT, () => {});
 
     } catch (err) {
-        console.log(err);
+        logger.log({
+            level: 'error',
+            message: err.messsage
+        });
     }
+
+    logger.log({
+        level: 'info',
+        message: `Server starts on ${process.env.PORT}`
+    });
     
 }
 

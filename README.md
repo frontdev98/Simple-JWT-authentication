@@ -20,6 +20,7 @@ Modules:
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [pg](https://www.npmjs.com/package/pg)
 - [useragent](https://www.npmjs.com/package/useragent)
+- [winston](https://www.npmjs.com/package/winston)
 
 Tools:
 - [Postman](https://www.postman.com/)
@@ -66,6 +67,9 @@ DB_NAME="databaseName" # created database from step 2
 PORT=5000 # The server will run on 5000 port, you can change
 
 JWT_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when server is started
+
+NODE_ENV=dev                          # Change it to "prod" if you don't want to see logs on console
+LOG_PATH='server.log'                 # Path to log file
 ```
 
 5. Initialize database with data from step 3

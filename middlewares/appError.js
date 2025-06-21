@@ -1,5 +1,10 @@
+const { logger } = require('../logger');
+
 const errHandler = (err, req, res, next) => {
-    console.log(`An error was occured during application working: ${err}`);
+    logger.log({
+        level: 'error',
+        message: err
+    });
     next();
 };
 
