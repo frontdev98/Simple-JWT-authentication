@@ -43,7 +43,7 @@ cd jwt-auth
 npm i
 ```
 
-3. Create new user with priveleges to access to database, for example:
+1. Create new user and its database at PostgreSQL, for example:
 
 ```bash
 sudo -u postgres psql
