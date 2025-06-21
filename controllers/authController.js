@@ -3,8 +3,8 @@ const { User } = require('../models/userModel');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
-const generateAccessToken = (id, roles) => {
-    const payload = {id, roles};
+const generateAccessToken = (id, email, roles) => {
+    const payload = {id, roles, email};
     const secret  = process.env.JWT_SECRET;
     const token   = jwt.sign(payload, secret, {expiresIn: "6h"});
     return token;
