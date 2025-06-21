@@ -7,8 +7,10 @@ The project demonstrates user authentication based on JWT (Json Web Token).
 - Node v22.16.0
 - PostgreSQL 14.18
 - Express
-- Pg
+- bcrypt
+- jsonwebtoken
 - Nodemon
+- pg
 - useragent
 - express-validator
 - dotenv
@@ -19,6 +21,7 @@ The project demonstrates user authentication based on JWT (Json Web Token).
 
 * User registration
 * User login
+* User list
 
 ## Get started
 
