@@ -25,7 +25,7 @@ class User {
     }
 
     static async getAll() {
-        const query = await pool.query(`SELECT * FROM jwt_auth.persons;`);
+        const query = await pool.query(`SELECT * FROM sch_jwt_auth.t_persons;`);
         const users = query.rows.map(({id, email, password, roles}) => 
             new User(email, password, roles, id));
         return users;
@@ -33,7 +33,7 @@ class User {
 
     static async getOne(field) {
         const [name, value] = Object.entries(field)[0];
-        const query = await pool.query(`SELECT * FROM jwt_auth.persons WHERE ${name}=$1`, [value]);
+        const query = await pool.query(`SELECT * FROM sch_jwt_auth.t_persons WHERE ${name}=$1`, [value]);
 
         if (query.rows.length === 0)
             return undefined;
@@ -45,7 +45,7 @@ class User {
 
     async create() {
         const query = await pool.query(
-            `INSERT INTO jwt_auth.persons (
+            `INSERT INTO sch_jwt_auth.t_persons (
                 email, 
                 password, 
                 roles
@@ -64,7 +64,7 @@ class User {
     async update(fields) {
         const {id, email, password, roles} = fields;
         const query = await pool.query(
-            `UPDATE jwt_auth.persons 
+            `UPDATE sch_jwt_auth.t_persons 
              SET 
                 email=$1, 
                 password=$2, 
