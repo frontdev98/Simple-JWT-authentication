@@ -5,6 +5,7 @@ The project demonstrates user authentication based on JWT (Json Web Token).
 ## Project Stack
 Environment:
 - Ubuntu 22.04
+- Windows 11 Pro 24H2
 
 Base:
 - [Node v22.16.0](https://nodejs.org/en/blog/release/v22.16.0)
