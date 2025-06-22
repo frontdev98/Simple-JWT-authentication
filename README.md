@@ -34,7 +34,7 @@ Tools:
 1. Clone the project and go to its directory:
 
 ```bash
-git clone https://github.com/frontdev98/jwt-auth.git
+git clone https://github.com/frontdev98/Simple-JWT-authentication.git
 ```
 
 ```bash
