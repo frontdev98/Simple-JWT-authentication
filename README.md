@@ -1,7 +1,7 @@
 # Simple JWT Authentication
 
 The project demonstrates user authentication based on JWT (Json Web Token) (access token only).
-The basis of the project is taken from youtube channel (UlbiTV)[https://youtu.be/d_aJdcDq6AY?si=2WZITSSbEsYDRYGu].
+The basis of the project is taken from youtube channel [UlbiTV](https://youtu.be/d_aJdcDq6AY?si=2WZITSSbEsYDRYGu).
 
 ## Project Stack
 Environment:
