@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
     }
 
     try {
-        const decodedData = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
+        const decodedData = jwt.verify(token.split(' ')[1], process.env.JWT_ACCESS_SECRET);
         req.user = decodedData;
         logger.log({
             level: 'info',

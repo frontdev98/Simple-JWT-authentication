@@ -14,7 +14,7 @@ module.exports = function(roles) {
         }
 
         try {
-            const userRoles = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET).roles;
+            const userRoles = jwt.verify(token.split(' ')[1], process.env.JWT_ACCESS_SECRET).roles;
             
             let hasRole = false;
 

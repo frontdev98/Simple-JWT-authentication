@@ -4,16 +4,20 @@ The project demonstrates user authentication based on JWT (Json Web Token) (acce
 The basis of the project is taken from youtube channel [UlbiTV](https://youtu.be/d_aJdcDq6AY?si=2WZITSSbEsYDRYGu).
 
 ## Project Stack
+
 Environment:
+
 - Ubuntu 22.04
 - Windows 11 Pro 24H2
 
 Base:
+
 - [Node v22.16.0](https://nodejs.org/en/blog/release/v22.16.0)
 - [PostgreSQL 14.18](https://www.postgresql.org/about/news/postgresql-175-169-1513-1418-and-1321-released-3072/)
 - [Openssl 3.2.4](https://www.openssl.org/)
 
 Modules:
+
 - [express](https://www.npmjs.com/package/express)
 - [express-validator](https://www.npmjs.com/package/express-validator)
 - [nodemon](https://www.npmjs.com/package/nodemon)
@@ -25,9 +29,9 @@ Modules:
 - [winston](https://www.npmjs.com/package/winston)
 
 Tools:
+
 - [Postman](https://www.postman.com/)
 - [Httpie](https://httpie.io/)
-
 
 ## Get started
 
@@ -42,6 +46,7 @@ cd jwt-auth
 ```
 
 2. Install dependencies
+
 ```bash
 npm i
 ```
@@ -68,7 +73,7 @@ DB_NAME="databaseName" # created database from step 2
 
 PORT=5000 # The server will run on 5000 port, you can change
 
-JWT_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when server starts
+JWT_ACCESS_SECRET=$(openssl rand -base64 32) # Generate 256-bit key every time when server starts
 
 NODE_ENV=dev                          # Change it to "prod" if you don't want to see logs on console
 LOG_PATH='server.log'                 # Path to log file
@@ -88,6 +93,7 @@ npm run dev
 ```
 
 ## Project test
+
 You will need "Postman" to make HTTP requests. If you have lots of fun
 from console, use httpie (like me).
 
@@ -105,6 +111,7 @@ http --json http://localhost:5000/auth/login email=someuser@gmail.com password=1
 ```
 
 Clear your database after the tests by command
+
 ```bash
 npm run dbclear
 ```

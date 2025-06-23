@@ -6,7 +6,7 @@ const { logger } = require('../logger');
 
 const generateAccessToken = (id, email, roles) => {
     const payload = {id, roles, email};
-    const secret  = process.env.JWT_SECRET;
+    const secret  = process.env.JWT_ACCESS_SECRET;
     const token   = jwt.sign(payload, secret, {expiresIn: '1h'});
 
     logger.log({
