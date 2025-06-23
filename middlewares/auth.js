@@ -22,11 +22,28 @@ module.exports = function(req, res, next) {
         next();
 
     } catch (e) {
-        logger.log({
-            level: 'error',
-            message: e.message
-        });
-        return res.status(498).json("Token is expired.");
+        // response to the client type of the error
+        let errorMessage = '';
+
+        switch(e.name) {
+            case 'TokenExpiredError':
+                errorMessage = 'Token is expired';
+                break;
+
+            case 'JsonWebTokenError':
+                errorMessage = `Token error: ${e.message}`;
+                break;
+
+            default:
+                logger.log({
+                    level: 'error',
+                    message: e
+                });
+                errorMessage = 'Unrecongnized error';
+                break;
+        }
+        
+        return res.status(401).json(errorMessage);
     }
 
     next();

@@ -62,19 +62,18 @@ class User {
     }
 
     async update(fields) {
-        const {id, email, password, roles} = fields;
+        const {id, email, password, roles, refresh_token} = fields;
         const query = await pool.query(
             `UPDATE sch_jwt_auth.t_persons 
              SET 
                 email=$1, 
                 password=$2, 
-                roles=$3 
-            WHERE id=$4 
+                roles=$3,
+                refresh_token=$4
+            WHERE id=$5 
                 RETURNING *`,
-            [email, password, roles, id]);
-        const row = query.rows[0];
-        const user = new User(row.email, row.password, row.roles, row.id);
-        return user;
+            [email, password, roles, refresh_token, id]);
+        return this;
     }
 
     toJson() {

@@ -29,7 +29,8 @@ async function initDb() {
                 email		VARCHAR(255) 	    NOT NULL UNIQUE,
                 password	VARCHAR(255)	    NOT NULL,
                 created_at	TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-                roles       VARCHAR(255)[]
+                roles       VARCHAR(255)[],
+                refresh_token VARCHAR(255)
             );
         `);
 

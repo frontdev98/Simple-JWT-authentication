@@ -6,7 +6,7 @@ const { logger } = require('../logger');
 
 const generateTokenPair = (id, email, roles) => {
     const payload = {id, roles, email};
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: '15m'});
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: 60});
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: '15d'});
 
     logger.log({
@@ -72,7 +72,22 @@ class AuthController {
         // generate access token and send it to client
         const {accessToken, refreshToken} = generateTokenPair(user.id, user.email, user.roles);
 
-        return res.json({accessToken, refreshToken});
+        // update refresh token at database
+        user.update({
+            id: user.id,
+            email: user.email,
+            password: user.password,
+            roles: user.roles,
+            refreshToken: refreshToken
+        });
+
+        // put refresh token in cookies
+        res.cookie('refreshToken', refreshToken, {
+            expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 15)), // 15 days
+            httpOnly: true                                              // getting this cookie with javascript is not available
+        });
+
+        return res.json({accessToken});
     }
 
     async isAuthorized(req, res) {
