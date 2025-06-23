@@ -23,7 +23,12 @@ async function App() {
         // application error handler
         app.use(errHandler);
 
-        app.listen(process.env.PORT, () => {});
+        app.listen(process.env.PORT, () => {
+            logger.log({
+                level: 'info',
+                message: `Server starts on ${process.env.PORT}`
+            });
+        });
 
     } catch (err) {
         logger.log({
@@ -31,12 +36,6 @@ async function App() {
             message: err.messsage
         });
     }
-
-    logger.log({
-        level: 'info',
-        message: `Server starts on ${process.env.PORT}`
-    });
-    
 }
 
 App();
