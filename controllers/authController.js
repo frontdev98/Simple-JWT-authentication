@@ -4,17 +4,17 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const { logger } = require('../logger');
 
-const generateAccessToken = (id, email, roles) => {
+const generateTokenPair = (id, email, roles) => {
     const payload = {id, roles, email};
-    const secret  = process.env.JWT_ACCESS_SECRET;
-    const token   = jwt.sign(payload, secret, {expiresIn: '1h'});
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {expiresIn: '15m'});
+    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {expiresIn: '15d'});
 
     logger.log({
         level: 'info',
-        message: `Generated token for "${email}": ${token}`
+        message: `Generate token pair for "${email}".`
     });
 
-    return token;
+    return {accessToken, refreshToken};
 };
 
 class AuthController {
@@ -70,9 +70,9 @@ class AuthController {
         }
 
         // generate access token and send it to client
-        const token = generateAccessToken(user.id, user.email, user.roles);
+        const {accessToken, refreshToken} = generateTokenPair(user.id, user.email, user.roles);
 
-        return res.json({token});
+        return res.json({accessToken, refreshToken});
     }
 
     async isAuthorized(req, res) {
